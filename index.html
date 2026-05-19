@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#1a5fb4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <title>ТРПУ Помощник</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f5f5f5;
+            padding: 12px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Заголовок */
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #1a5fb4;
+            box-shadow: 0 0 0 3px rgba(26, 95, 180, 0.1);
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .nav-btn {
+            flex: 1;
+            padding: 10px;
+            background: #1a5fb4;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+        
+        .nav-btn:active {
+            transform: scale(0.98);
+            background: #0f4a8a;
+        }
+        
+        /* Основной контент */
+        .content {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a5fb4;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+        
+        .text {
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .text img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 16px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .text h1 {
+            font-size: 28px;
+            margin: 20px 0 12px;
+            color: #1a5fb4;
+        }
+        
+        .text h2 {
+            font-size: 22px;
+            margin: 16px 0 10px;
+            color: #2c3e50;
+        }
+        
+        .text h3 {
+            font-size: 18px;
+            margin: 14px 0 8px;
+            color: #34495e;
+        }
+        
+        .text ul, .text ol {
+            margin: 12px 0 12px 24px;
+        }
+        
+        .text li {
+            margin: 6px 0;
+        }
+        
+        .text blockquote {
+            border-left: 4px solid #1a5fb4;
+            padding-left: 16px;
+            margin: 16px 0;
+            color: #555;
+            font-style: italic;
+        }
+        
+        .text code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .text pre {
+            background: #f4f4f4;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        
+        .button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            margin: 8px 0;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        
+        .button:active {
+            transform: scale(0.98);
+            background: #e0e0e0;
+        }
+        
+        .button.external {
+            background: #1f8a70;
+            color: white;
+        }
+        
+        .button.external:active {
+            background: #166b56;
+        }
+        
+        /* Меню */
+        .menu {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .menu-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #666;
+        }
+        
+        .menu-item {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-radius: 8px;
+        }
+        
+        .menu-item:active {
+            background: #f5f5f5;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        /* Загрузка */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            body {
+                padding: 8px;
+            }
+            
+            .title {
+                font-size: 20px;
+            }
+            
+            .content, .menu, .header {
+                border-radius: 12px;
+            }
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .content, .menu {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <input type="text" class="search-box" id="search" placeholder="🔍 Поиск (Н600, К71, Е1001...)" autocomplete="off">
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="goHome()">🏠 Домой</button>
+                <button class="nav-btn" onclick="goBack()">← Назад</button>
+            </div>
+        </div>
+        
+        <div id="content" class="content">
+            <div class="loading">Загрузка...</div>
+        </div>
+        
+        <div id="menu" class="menu">
+            <div class="loading">Загрузка...</div>
+        </div>
+    </div>
+    
+    <script>
+        // Данные приложения
+        const nodes = {"newNode_12": {"id": "newNode_12", "title": "Главное меню — Помощник ТРПУ", "text": "Помощник в делах ТРПУ.\n\n ![периодическая проверка бдительности](периодическая проверка бдительности.png) Введите номер команды или ошибки (Н600, К71, Е1010)", "images": ["периодическая проверка бдительности.png"], "buttons": [{"text": "САУТ", "target": "newNode_2"}, {"text": "КПД", "target": "newNode_3"}, {"text": "ТСКБМ", "target": "newNode_15"}, {"text": "КЛУБ БЛОК", "target": "newNode_4"}, {"text": "Устройства", "target": "newNode_8"}, {"text": "РСТ", "target": "newNode_10"}, {"text": "Сломалось? helper.voronin.xyz", "url": "https://helper.voronin.xyz/"}]}, "newNode_2": {"id": "newNode_2", "title": "САУТ — Неисправности и советы", "text": "САУТ\n\n1) При V=0 (после снижения скорости на пульте при включенном тумблере на ПУ режим САУТ), срабатывает ТМ и соответственно нет схемы.\nПутем подмены всех блоков выяснили, что виноват БЭК.\n\n2) Не держит ЭПК при вкл САУТ, или в режиме Саут:\n\n 1. С БПРу - блок БЭК Конфиг именно для грузового поезда, не ЧС и т.п. только ВЛ10, ВЛ11.\n\n2. Неисправен БС-ЦКР.\n\n3)Не притягивается ЭЭ САУТ на скоростемере в режиме САУТ:\n\n1. БПРу - блок БЭК ЗАПИСАТЬ конфиг именно для грузового поезда, не ЧС и т.п. только ВЛ10, ВЛ11.\n\n2. Проверить соответствие схемы фишки подключения 1-2 или 3-6 (наши по идее подписаны на корпусе скоростемера),\n\n3.Проверить контролькой + и – на фишке саут , контакты 1,2 или 3,6 при включенном тумблере режима САУТ\n\n4) Не показывает скорость САУТ: Датчики, БС ДПС или БЭК(на КПД есть скорость)\n\n5) Моргает индикация на пульт ПМ.\n\nВыключи Тягу при 0 КМ, это нормально при включении САУТ.6) ПУ режимы САУТ (зеленый / красный, режим САУТ и ПОДСКАЗКИ) Тумблер в АЛС отключает отключает цепи локомотива от САУТ. Используется для КРАТКОВРЕМЕННОГО отключения САУТ при сбоях и для дальнейшего анализа оных. При этом, САУТ не теряет информацию полученную из базы САУТ.\n\n7) Идет проверка бдительности в режиме САУТ под КЖ, Вылезла ошибка Е1001 \n– замена бс-алс помогло, При проверке блокировка обязательна, так как через минуту идет свисток эпк, не реагируя на рб.\n\n8) Через минуту Пропадает индикация включения режима САУТ на ПМ, на тумблер включения АЛС/САУТ не реагирует.  Помогла замена БЭК\n\n9) При включении САУТ на ПУ, в режим «САУТ» выбивает АЗВ АЛСН.\nВыявлен неисправный БЭК.\n\n10) В пути следования погас пу саут, свист эпк, пропала тяга.\nПомогла замена Бэк", "images": [], "buttons": [{"text": "Неисправности и коды ошибок", "url": "https://telegra.ph/Kody-oshibok-SAUT-07-21"}, {"text": "Работа САУТ", "url": "https://telegra.ph/SAUT-CM485-07-21"}, {"text": "БПрУ", "url": "https://telegra.ph/BPrU-07-21"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_3": {"id": "newNode_3", "title": "КПД — Параметры и настройка", "text": "КПД  Введите номер ошибки (Н600)\n\nПоложение крана на 15 прошивке:\nЧ+МИН в обслуге(27 параметр 1)\n\nПараметры:\n\n00 Давление ТМ\n\n1 Давление ТЦ\n\n02 Диаметр бандажа 1кп ( 600-1350)\n\n03 Диаметр бандажа 2кп ( 600-1350)\n\n04 Наличие МПМЭ (кассеты)\n\n05 ТИП ЛОКОМОТИВА (ВЛ10у-138; ВЛ11-134; ВЛ11м-153; ТЭМ14-627; ТЭМ7а-509; ТЭМ7-547; ЧМЭ3-557; ТЭМ18ДМ-607)\n\n06 Номер локомотива\n\n07    42\n\n08 Верхний предел шкалы скорости\n\n09 Дискретность регистр пути БР-2М/1\n\n10 Дискретность регистр скорости БР2М/1\n\n11 Наличия БР/2М/1  (0 или 1)\n\n12 Верхний предел измерения давления 10\n\n13 Наличие блока контроля:  0 для 3ПА; 1 для 3ПВ\n\n14 Скорость V(Ж)\n\n15 Скорость V(КЖ)\n\n16  (Ноль нельзя)    1\n\n17 Признак одной или двух кабин  1; 2 ; 3-МВПС(2 при 1 КПД на 2 ДКСВМ)\n\n18 Вариант АЛС:  0-АЛС; 1-АЛС+Л143; 2-УКБМ; 5-Л132+Л143; 8-АЛС+ТСКБМ; 16-САУТ; 24-САУТ+ТСКБМ; 32-АЛС4; 64-АЛС+Л116\n\n19 БУС: 0 или 1\n\n20 АГС Путь на один импульс\n\n21 Код варианта КВАРТА\n\n22 Дискретность регистрации топлива\n\n23 День и месяц\n\n24 Год\n\n25 Число доп параметров\n\n26  Чисел в табельном номере  8\n\n27 1", "images": [], "buttons": [{"text": "Коды ошибок КПД", "url": "https://telegra.ph/Oshibki-KPD-07-21"}, {"text": "Настройка КПД 3ПА 3ПВ", "url": "https://telegra.ph/Nastrojka-parametrov-KPD-3PA-i-3PV-07-21"}, {"text": "Настройка КПД 3ПС", "url": "https://telegra.ph/Nastrojka-parametrov-KPD-3PS-07-21"}, {"text": "Серия локомотивов", "url": "https://telegra.ph/Tipy-lokomotivov-07-21"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_4": {"id": "newNode_4", "title": "КЛУБ-У / БЛОК К71", "text": "КЛУБ-У БЛОК К71\n\nК5 Ввод постоянных характеристик (с кассетой и БВДУ для КЛУБ)\nК71 диагностика исправности\nК70 выход из диагностики\nК263  Отмена контроля скатывания в течение 120 сек\nК522 версия карты", "images": ["к5.jpg", "к71.png", "к71.jpg", "снс.png"], "buttons": [{"text": "Команды БЛОК", "url": "https://telegra.ph/Perchen-komand-BLOK-07-21"}, {"text": "Команды КЛУБ-У", "url": "https://telegra.ph/Komandy-KLUB-U-09-13"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_8": {"id": "newNode_8", "title": "Устройства безопасности", "text": "ОЯ, УКБМ, КОН, АГС...\n\nИдет периодичность в 0, залипли контакты кнопки КП.", "images": ["Мини-блокнот.jpg", "Ламели в ОЯ.jpg"], "buttons": [{"text": "УКБМ", "target": "newNode_9"}, {"text": "РБ-80", "url": "https://telegra.ph/RB-80-07-22"}, {"text": "Приемные катушки", "target": "newNode_17"}, {"text": "ИСАВП-РТ 2ЭС6", "url": "https://telegra.ph/ISAVP-RT-07-22"}, {"text": "ТСКБМ", "target": "newNode_15"}, {"text": "ЭПК 150И", "target": "newNode_16"}, {"text": "РЭ ЭПК 153А", "url": "https://catalog-mtz.ru/api/storage/media/files/7d4d99fb9651ba5121f0d3ae14cdf794.pdf"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_9": {"id": "newNode_9", "title": "УКБМ — Алгоритм работы и разъём", "text": "Алгоритм работы. Разъем УКБМ", "images": ["укбм разъём.jpg", "УКБМ листок 1.BMP", "УКБМ листок 2.BMP", "УКБМ листок 3.BMP", "УКБМ листок 4.BMP"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_10": {"id": "newNode_10", "title": "РСТ — СТОР и настройка радиостанций", "text": "СТОР:\n\nКВ 1 канал УКВ 5 канал.\nна РЛСМ10 ввести 090#; нажать #, затем ВВЕРХ;выставить СТОР ПРМ 1; СТОР ПРД 1;\nПерейти на экран АСУ/ПП1 выставить АСУ 1 нажать F1\nF1 * Тест 1 2 3 голос.\n\nРВС-Вход в меню кнопка сзади, одновременно 4 и 6;\nПароль 3578 или 9102 или 0910;\nСмена прошивки ПУ - кнопка сзади, одновременно 3 и 7;\n\nРВ1.1М-\n\nТест Т-1-ввод; Т-2-Ввод; Т-3-Ввод\nСРС/ПРС: F-ВСП\nПрошивка канала F15-Ввод: F246-Ввод:\nГруппа-Канал (например 1-1): Появится Г1_К1_ К-0052(номер канала)", "images": ["рлсм.png", "коды локомотивов рст.png", "коды локомотивов рст2.png"], "buttons": [{"text": "КОДЫ ЛОКОМТИВОВ для РСТ", "url": "https://telegra.ph/KODY-LOKOMOTIVOV-DLYA-RST-05-17"}, {"text": "Распайка кабелей РВ1-1М", "target": "newNode_11"}, {"text": "Распайка кабелей РВС-1", "target": "newNode_14"}, {"text": "Распайка кабелей РЛСМ10", "target": "newNode_13"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_11": {"id": "newNode_11", "title": "Распайка кабелей РВ1-1М", "text": "Распайка кабелей РВ1-1М", "images": ["Распайка кабелей РВ1-1М (1).png", "Распайка кабелей РВ1-1М (2).png", "Распайка кабелей РВ1-1М (3).png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_13": {"id": "newNode_13", "title": "Распайка кабелей РЛСМ10", "text": "Распайка кабелей РЛСМ10", "images": ["Распайка кабелей рлсм10.png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_14": {"id": "newNode_14", "title": "Распайка кабелей РВС-1", "text": "Распайка кабелей РВС-1", "images": ["Распайка кабелей рвс1.png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_15": {"id": "newNode_15", "title": "ТСКБМ", "text": "ТСКБМ-К - версия ПО:\n 4.07 - на маневровых тепловозах с блоком ТСКБМ-А\n 4.01 - везде где нет блока ТСКБМ-А\n\n\nПроверка ТСКБМ тестером ТЛ-ТСКБМ:\n\n*  Включить УБ и ТСКБМ\n*  Вкл тестер. Переключатель в положении В\n*  Проконтролировать загорание желтого индикатора ПРИЕМ на ТСКБМ-П, ТСКБМ-ИМН\n*  Выждать от 70 секунд до 2 минут.\n*  Если индикатор проверки не начнет мигать, а индикатор ПРИЕМ продолжит устойчиво светится -  ТЛ-ТСКБМ выключить.\n* Через 52 сек должен начать мигать желтый Индикатор проверки работоспособности.\n* Если в течении 8 сек не будет нажата РБС, замигает КРАСНЫЙ индикатор и ЭПК будет обесточено.\n*  Нажать РБС для прекращения свистка ЭПК", "images": ["тл-тскбм.jpg", "тскбм.png"], "buttons": [{"text": "Нейроком", "url": "https://www.neurocom.ru/products/ukb/blok/"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_16": {"id": "newNode_16", "title": "ЭПК-150", "text": "ЭПК-150", "images": ["параметры эпк.png", "пружины.png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_17": {"id": "newNode_17", "title": "Приемные катушки", "text": "Приемные катушки", "images": ["парметры ПК.jpg", "плакат-эдс.jpg", "плакат-температура.jpg"], "buttons": [{"text": "Видео ПРР приемных катушек", "url": "https://youtu.be/91znPRc-e_k?si=GWM9vLTKs5wgqoKV"}, {"text": "Видео Катушки приемные", "url": "https://www.youtube.com/watch?v=XdPHXlwhYAs"}, {"text": "Видео Прием кодов", "url": "https://www.youtube.com/watch?v=Tovmei75WYY"}, {"text": "/start", "target": "newNode_12"}]}};
+        let history = [];
+        let currentNode = null;
+        
+        // Конвертация Markdown в HTML
+        function renderMarkdown(text) {
+            if (!text) return '';
+            
+            let html = text;
+            
+            // Изображения (должны обрабатываться первыми)
+            html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
+                return `<img src="content/images/${src}" alt="${alt}" loading="lazy" onclick="showImageModal(this.src)">`;
+            });
+            
+            // Ссылки
+            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
+                if (url.startsWith('newNode_')) {
+                    return `<a href="#" onclick="goToNode('${url}'); return false;">${text}</a>`;
+                } else {
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+                }
+            });
+            
+            // Жирный текст
+            html = html.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+            
+            // Курсив
+            html = html.replace(/\*([^\*]+)\*/g, '<em>$1</em>');
+            html = html.replace(/_([^_]+)_/g, '<em>$1</em>');
+            
+            // Код
+            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+            
+            // Заголовки
+            html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+            html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+            html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+            
+            // Маркированные списки
+            html = html.replace(/^[*-] (.+)$/gm, '<li>$1</li>');
+            html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+            
+            // Нумерованные списки
+            html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+            
+            // Цитаты
+            html = html.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
+            
+            // Горизонтальные линии
+            html = html.replace(/^---+$/gm, '<hr>');
+            
+            // Переносы строк в параграфы
+            const paragraphs = html.split('\n\n');
+            html = paragraphs.map(p => {
+                if (p.trim() && !p.startsWith('<') && !p.includes('<h') && !p.includes('<ul') && !p.includes('<blockquote')) {
+                    return `<p>${p}</p>`;
+                }
+                return p;
+            }).join('');
+            
+            return html;
+        }
+        
+        // Функция для показа изображения в модальном окне
+        function showImageModal(src) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.9);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                cursor: pointer;
+            `;
+            const img = document.createElement('img');
+            img.src = src;
+            img.style.cssText = `
+                max-width: 90%;
+                max-height: 90%;
+                border-radius: 8px;
+            `;
+            modal.appendChild(img);
+            modal.onclick = () => modal.remove();
+            document.body.appendChild(modal);
+        }
+        
+        // Переход к узлу
+        function goToNode(nodeId) {
+            if (!nodes[nodeId]) {
+                alert('Страница не найдена');
+                return;
+            }
+            
+            // Добавляем в историю
+            if (history.length === 0 || history[history.length-1] !== nodeId) {
+                history.push(nodeId);
+            }
+            
+            currentNode = nodeId;
+            const node = nodes[nodeId];
+            
+            // Рендерим контент
+            const title = node.title || nodeId;
+            const text = node.text || 'Нет описания для этой страницы.';
+            
+            let html = `<div class="title">${title}</div>`;
+            html += `<div class="text">${renderMarkdown(text)}</div>`;
+            
+            // Добавляем кнопки из JSON
+            if (node.buttons && node.buttons.length > 0) {
+                html += '<hr style="margin: 16px 0;">';
+                node.buttons.forEach(btn => {
+                    const btnText = btn.text || '';
+                    if (btn.target) {
+                        html += `<button class="button" onclick="goToNode('${btn.target}')">${btnText}</button>`;
+                    } else if (btn.url) {
+                        html += `<button class="button external" onclick="window.open('${btn.url}', '_blank')">🔗 ${btnText}</button>`;
+                    }
+                });
+            }
+            
+            document.getElementById('content').innerHTML = html;
+            
+            // Рендерим меню
+            let menuHtml = '<div class="menu-title">📑 Быстрая навигация</div>';
+            if (node.buttons) {
+                node.buttons.forEach(btn => {
+                    if (btn.target) {
+                        menuHtml += `<div class="menu-item" onclick="goToNode('${btn.target}')">${btn.text}</div>`;
+                    } else if (btn.url) {
+                        menuHtml += `<div class="menu-item" style="color:#1f8a70" onclick="window.open('${btn.url}', '_blank')">🔗 ${btn.text}</div>`;
+                    }
+                });
+            }
+            
+            document.getElementById('menu').innerHTML = menuHtml;
+            
+            // Прокрутка вверх
+            window.scrollTo(0, 0);
+        }
+        
+        // Домой
+        function goHome() {
+            history = [];
+            goToNode('newNode_12');
+        }
+        
+        // Назад
+        function goBack() {
+            if (history.length > 1) {
+                history.pop();
+                goToNode(history[history.length-1]);
+            } else {
+                goHome();
+            }
+        }
+        
+        // Поиск
+        let searchTimeout;
+        function search() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const query = document.getElementById('search').value.toLowerCase().trim();
+                if (!query) {
+                    // Если поиск пустой, показываем обычное меню текущего узла
+                    if (currentNode) {
+                        const node = nodes[currentNode];
+                        let menuHtml = '<div class="menu-title">📑 Быстрая навигация</div>';
+                        if (node.buttons) {
+                            node.buttons.forEach(btn => {
+                                if (btn.target) {
+                                    menuHtml += `<div class="menu-item" onclick="goToNode('${btn.target}')">${btn.text}</div>`;
+                                } else if (btn.url) {
+                                    menuHtml += `<div class="menu-item" style="color:#1f8a70" onclick="window.open('${btn.url}', '_blank')">🔗 ${btn.text}</div>`;
+                                }
+                            });
+                        }
+                        document.getElementById('menu').innerHTML = menuHtml;
+                    }
+                    return;
+                }
+                
+                // Ищем результаты
+                const results = [];
+                for (const [id, node] of Object.entries(nodes)) {
+                    const searchText = (node.title + ' ' + node.text).toLowerCase();
+                    if (searchText.includes(query)) {
+                        results.push({id, title: node.title});
+                    }
+                }
+                
+                if (results.length === 0) {
+                    document.getElementById('menu').innerHTML = '<div class="menu-title">🔍 Ничего не найдено</div>';
+                    return;
+                }
+                
+                // Показываем результаты
+                let menuHtml = `<div class="menu-title">🔍 Результаты: ${results.length}</div>`;
+                results.slice(0, 30).forEach(result => {
+                    let title = result.title;
+                    if (title.length > 80) title = title.substring(0, 80) + '...';
+                    menuHtml += `<div class="menu-item" onclick="goToNode('${result.id}')">${title}</div>`;
+                });
+                
+                document.getElementById('menu').innerHTML = menuHtml;
+            }, 300);
+        }
+        
+        // Сохраняем данные для офлайн-режима
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(registration => {
+                console.log('Service Worker registered');
+            }).catch(error => {
+                console.log('Service Worker failed:', error);
+            });
+        }
+        
+        // Запуск приложения
+        goHome();
+        
+        // Обработчик поиска
+        document.getElementById('search').addEventListener('input', search);
+        
+        // Предотвращаем случайное закрытие при свайпе
+        let touchStart = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStart = e.touches[0].clientX;
+        });
+    </script>
+</body>
+</html>
