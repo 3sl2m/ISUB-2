@@ -107,6 +107,7 @@
             border-radius: 12px;
             margin: 16px 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
         }
         
         .text h1 {
@@ -187,35 +188,10 @@
             background: #166b56;
         }
         
-        /* Меню */
-        .menu {
-            background: white;
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        
-        .menu-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #666;
-        }
-        
-        .menu-item {
-            padding: 12px;
-            border-bottom: 1px solid #f0f0f0;
-            cursor: pointer;
-            transition: background 0.2s;
-            border-radius: 8px;
-        }
-        
-        .menu-item:active {
-            background: #f5f5f5;
-        }
-        
-        .menu-item:last-child {
-            border-bottom: none;
+        .separator {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 16px 0;
         }
         
         /* Загрузка */
@@ -235,7 +211,7 @@
                 font-size: 20px;
             }
             
-            .content, .menu, .header {
+            .content, .header {
                 border-radius: 12px;
             }
         }
@@ -252,7 +228,7 @@
             }
         }
         
-        .content, .menu {
+        .content {
             animation: fadeIn 0.3s ease-out;
         }
     </style>
@@ -270,15 +246,11 @@
         <div id="content" class="content">
             <div class="loading">Загрузка...</div>
         </div>
-        
-        <div id="menu" class="menu">
-            <div class="loading">Загрузка...</div>
-        </div>
     </div>
     
     <script>
         // Данные приложения
-        const nodes = {"newNode_12": {"id": "newNode_12", "title": "Главное меню — Помощник ТРПУ", "text": "Помощник в делах ТРПУ.\n\n ![периодическая проверка бдительности](периодическая проверка бдительности.png) Введите номер команды или ошибки (Н600, К71, Е1010)", "images": ["периодическая проверка бдительности.png"], "buttons": [{"text": "САУТ", "target": "newNode_2"}, {"text": "КПД", "target": "newNode_3"}, {"text": "ТСКБМ", "target": "newNode_15"}, {"text": "КЛУБ БЛОК", "target": "newNode_4"}, {"text": "Устройства", "target": "newNode_8"}, {"text": "РСТ", "target": "newNode_10"}, {"text": "Сломалось? helper.voronin.xyz", "url": "https://helper.voronin.xyz/"}]}, "newNode_2": {"id": "newNode_2", "title": "САУТ — Неисправности и советы", "text": "САУТ\n\n1) При V=0 (после снижения скорости на пульте при включенном тумблере на ПУ режим САУТ), срабатывает ТМ и соответственно нет схемы.\nПутем подмены всех блоков выяснили, что виноват БЭК.\n\n2) Не держит ЭПК при вкл САУТ, или в режиме Саут:\n\n 1. С БПРу - блок БЭК Конфиг именно для грузового поезда, не ЧС и т.п. только ВЛ10, ВЛ11.\n\n2. Неисправен БС-ЦКР.\n\n3)Не притягивается ЭЭ САУТ на скоростемере в режиме САУТ:\n\n1. БПРу - блок БЭК ЗАПИСАТЬ конфиг именно для грузового поезда, не ЧС и т.п. только ВЛ10, ВЛ11.\n\n2. Проверить соответствие схемы фишки подключения 1-2 или 3-6 (наши по идее подписаны на корпусе скоростемера),\n\n3.Проверить контролькой + и – на фишке саут , контакты 1,2 или 3,6 при включенном тумблере режима САУТ\n\n4) Не показывает скорость САУТ: Датчики, БС ДПС или БЭК(на КПД есть скорость)\n\n5) Моргает индикация на пульт ПМ.\n\nВыключи Тягу при 0 КМ, это нормально при включении САУТ.6) ПУ режимы САУТ (зеленый / красный, режим САУТ и ПОДСКАЗКИ) Тумблер в АЛС отключает отключает цепи локомотива от САУТ. Используется для КРАТКОВРЕМЕННОГО отключения САУТ при сбоях и для дальнейшего анализа оных. При этом, САУТ не теряет информацию полученную из базы САУТ.\n\n7) Идет проверка бдительности в режиме САУТ под КЖ, Вылезла ошибка Е1001 \n– замена бс-алс помогло, При проверке блокировка обязательна, так как через минуту идет свисток эпк, не реагируя на рб.\n\n8) Через минуту Пропадает индикация включения режима САУТ на ПМ, на тумблер включения АЛС/САУТ не реагирует.  Помогла замена БЭК\n\n9) При включении САУТ на ПУ, в режим «САУТ» выбивает АЗВ АЛСН.\nВыявлен неисправный БЭК.\n\n10) В пути следования погас пу саут, свист эпк, пропала тяга.\nПомогла замена Бэк", "images": [], "buttons": [{"text": "Неисправности и коды ошибок", "url": "https://telegra.ph/Kody-oshibok-SAUT-07-21"}, {"text": "Работа САУТ", "url": "https://telegra.ph/SAUT-CM485-07-21"}, {"text": "БПрУ", "url": "https://telegra.ph/BPrU-07-21"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_3": {"id": "newNode_3", "title": "КПД — Параметры и настройка", "text": "КПД  Введите номер ошибки (Н600)\n\nПоложение крана на 15 прошивке:\nЧ+МИН в обслуге(27 параметр 1)\n\nПараметры:\n\n00 Давление ТМ\n\n1 Давление ТЦ\n\n02 Диаметр бандажа 1кп ( 600-1350)\n\n03 Диаметр бандажа 2кп ( 600-1350)\n\n04 Наличие МПМЭ (кассеты)\n\n05 ТИП ЛОКОМОТИВА (ВЛ10у-138; ВЛ11-134; ВЛ11м-153; ТЭМ14-627; ТЭМ7а-509; ТЭМ7-547; ЧМЭ3-557; ТЭМ18ДМ-607)\n\n06 Номер локомотива\n\n07    42\n\n08 Верхний предел шкалы скорости\n\n09 Дискретность регистр пути БР-2М/1\n\n10 Дискретность регистр скорости БР2М/1\n\n11 Наличия БР/2М/1  (0 или 1)\n\n12 Верхний предел измерения давления 10\n\n13 Наличие блока контроля:  0 для 3ПА; 1 для 3ПВ\n\n14 Скорость V(Ж)\n\n15 Скорость V(КЖ)\n\n16  (Ноль нельзя)    1\n\n17 Признак одной или двух кабин  1; 2 ; 3-МВПС(2 при 1 КПД на 2 ДКСВМ)\n\n18 Вариант АЛС:  0-АЛС; 1-АЛС+Л143; 2-УКБМ; 5-Л132+Л143; 8-АЛС+ТСКБМ; 16-САУТ; 24-САУТ+ТСКБМ; 32-АЛС4; 64-АЛС+Л116\n\n19 БУС: 0 или 1\n\n20 АГС Путь на один импульс\n\n21 Код варианта КВАРТА\n\n22 Дискретность регистрации топлива\n\n23 День и месяц\n\n24 Год\n\n25 Число доп параметров\n\n26  Чисел в табельном номере  8\n\n27 1", "images": [], "buttons": [{"text": "Коды ошибок КПД", "url": "https://telegra.ph/Oshibki-KPD-07-21"}, {"text": "Настройка КПД 3ПА 3ПВ", "url": "https://telegra.ph/Nastrojka-parametrov-KPD-3PA-i-3PV-07-21"}, {"text": "Настройка КПД 3ПС", "url": "https://telegra.ph/Nastrojka-parametrov-KPD-3PS-07-21"}, {"text": "Серия локомотивов", "url": "https://telegra.ph/Tipy-lokomotivov-07-21"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_4": {"id": "newNode_4", "title": "КЛУБ-У / БЛОК К71", "text": "КЛУБ-У БЛОК К71\n\nК5 Ввод постоянных характеристик (с кассетой и БВДУ для КЛУБ)\nК71 диагностика исправности\nК70 выход из диагностики\nК263  Отмена контроля скатывания в течение 120 сек\nК522 версия карты", "images": ["к5.jpg", "к71.png", "к71.jpg", "снс.png"], "buttons": [{"text": "Команды БЛОК", "url": "https://telegra.ph/Perchen-komand-BLOK-07-21"}, {"text": "Команды КЛУБ-У", "url": "https://telegra.ph/Komandy-KLUB-U-09-13"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_8": {"id": "newNode_8", "title": "Устройства безопасности", "text": "ОЯ, УКБМ, КОН, АГС...\n\nИдет периодичность в 0, залипли контакты кнопки КП.", "images": ["Мини-блокнот.jpg", "Ламели в ОЯ.jpg"], "buttons": [{"text": "УКБМ", "target": "newNode_9"}, {"text": "РБ-80", "url": "https://telegra.ph/RB-80-07-22"}, {"text": "Приемные катушки", "target": "newNode_17"}, {"text": "ИСАВП-РТ 2ЭС6", "url": "https://telegra.ph/ISAVP-RT-07-22"}, {"text": "ТСКБМ", "target": "newNode_15"}, {"text": "ЭПК 150И", "target": "newNode_16"}, {"text": "РЭ ЭПК 153А", "url": "https://catalog-mtz.ru/api/storage/media/files/7d4d99fb9651ba5121f0d3ae14cdf794.pdf"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_9": {"id": "newNode_9", "title": "УКБМ — Алгоритм работы и разъём", "text": "Алгоритм работы. Разъем УКБМ", "images": ["укбм разъём.jpg", "УКБМ листок 1.png", "УКБМ листок 2.png", "УКБМ листок 3.png", "УКБМ листок 4.png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_10": {"id": "newNode_10", "title": "РСТ — СТОР и настройка радиостанций", "text": "СТОР:\n\nКВ 1 канал УКВ 5 канал.\nна РЛСМ10 ввести 090#; нажать #, затем ВВЕРХ;выставить СТОР ПРМ 1; СТОР ПРД 1;\nПерейти на экран АСУ/ПП1 выставить АСУ 1 нажать F1\nF1 * Тест 1 2 3 голос.\n\nРВС-Вход в меню кнопка сзади, одновременно 4 и 6;\nПароль 3578 или 9102 или 0910;\nСмена прошивки ПУ - кнопка сзади, одновременно 3 и 7;\n\nРВ1.1М-\n\nТест Т-1-ввод; Т-2-Ввод; Т-3-Ввод\nСРС/ПРС: F-ВСП\nПрошивка канала F15-Ввод: F246-Ввод:\nГруппа-Канал (например 1-1): Появится Г1_К1_ К-0052(номер канала)", "images": ["рлсм.png", "коды локомотивов рст.png", "коды локомотивов рст2.png"], "buttons": [{"text": "КОДЫ ЛОКОМТИВОВ для РСТ", "url": "https://telegra.ph/KODY-LOKOMOTIVOV-DLYA-RST-05-17"}, {"text": "Распайка кабелей РВ1-1М", "target": "newNode_11"}, {"text": "Распайка кабелей РВС-1", "target": "newNode_14"}, {"text": "Распайка кабелей РЛСМ10", "target": "newNode_13"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_11": {"id": "newNode_11", "title": "Распайка кабелей РВ1-1М", "text": "Распайка кабелей РВ1-1М", "images": ["Распайка кабелей РВ1-1М (1).png", "Распайка кабелей РВ1-1М (2).png", "Распайка кабелей РВ1-1М (3).png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_13": {"id": "newNode_13", "title": "Распайка кабелей РЛСМ10", "text": "Распайка кабелей РЛСМ10", "images": ["Распайка кабелей рлсм10.png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_14": {"id": "newNode_14", "title": "Распайка кабелей РВС-1", "text": "Распайка кабелей РВС-1", "images": ["Распайка кабелей рвс1.png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_15": {"id": "newNode_15", "title": "ТСКБМ", "text": "ТСКБМ-К - версия ПО:\n 4.07 - на маневровых тепловозах с блоком ТСКБМ-А\n 4.01 - везде где нет блока ТСКБМ-А\n\n\nПроверка ТСКБМ тестером ТЛ-ТСКБМ:\n\n*  Включить УБ и ТСКБМ\n*  Вкл тестер. Переключатель в положении В\n*  Проконтролировать загорание желтого индикатора ПРИЕМ на ТСКБМ-П, ТСКБМ-ИМН\n*  Выждать от 70 секунд до 2 минут.\n*  Если индикатор проверки не начнет мигать, а индикатор ПРИЕМ продолжит устойчиво светится -  ТЛ-ТСКБМ выключить.\n* Через 52 сек должен начать мигать желтый Индикатор проверки работоспособности.\n* Если в течении 8 сек не будет нажата РБС, замигает КРАСНЫЙ индикатор и ЭПК будет обесточено.\n*  Нажать РБС для прекращения свистка ЭПК", "images": ["тл-тскбм.jpg", "тскбм.png"], "buttons": [{"text": "Нейроком", "url": "https://www.neurocom.ru/products/ukb/blok/"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_16": {"id": "newNode_16", "title": "ЭПК-150", "text": "ЭПК-150", "images": ["параметры эпк.png", "пружины.png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_17": {"id": "newNode_17", "title": "Приемные катушки", "text": "Приемные катушки", "images": ["парметры ПК.jpg", "плакат-эдс.jpg", "плакат-температура.jpg"], "buttons": [{"text": "Видео ПРР приемных катушек", "url": "https://youtu.be/91znPRc-e_k?si=GWM9vLTKs5wgqoKV"}, {"text": "Видео Катушки приемные", "url": "https://www.youtube.com/watch?v=XdPHXlwhYAs"}, {"text": "Видео Прием кодов", "url": "https://www.youtube.com/watch?v=Tovmei75WYY"}, {"text": "/start", "target": "newNode_12"}]}};
+        const nodes = {"newNode_12": {"id": "newNode_12", "title": "Главное меню — Помощник ТРПУ", "text": "Помощник в делах ТРПУ.\n\n ![периодическая проверка бдительности](периодическая проверка бдительности.png) Введите номер команды или ошибки (Н600, К71, Е1010)", "images": ["периодическая проверка бдительности.png"], "buttons": [{"text": "САУТ", "target": "newNode_2"}, {"text": "КПД", "target": "newNode_3"}, {"text": "ТСКБМ", "target": "newNode_15"}, {"text": "КЛУБ БЛОК", "target": "newNode_4"}, {"text": "Устройства", "target": "newNode_8"}, {"text": "РСТ", "target": "newNode_10"}, {"text": "Сломалось? helper.voronin.xyz", "url": "https://helper.voronin.xyz/"}]}, "newNode_2": {"id": "newNode_2", "title": "САУТ — Неисправности и советы", "text": "САУТ\n\n1) При V=0 (после снижения скорости на пульте при включенном тумблере на ПУ режим САУТ), срабатывает ТМ и соответственно нет схемы.\nПутем подмены всех блоков выяснили, что виноват БЭК.\n\n2) Не держит ЭПК при вкл САУТ, или в режиме Саут:\n\n 1. С БПРу - блок БЭК Конфиг именно для грузового поезда, не ЧС и т.п. только ВЛ10, ВЛ11.\n\n2. Неисправен БС-ЦКР.\n\n3)Не притягивается ЭЭ САУТ на скоростемере в режиме САУТ:\n\n1. БПРу - блок БЭК ЗАПИСАТЬ конфиг именно для грузового поезда, не ЧС и т.п. только ВЛ10, ВЛ11.\n\n2. Проверить соответствие схемы фишки подключения 1-2 или 3-6 (наши по идее подписаны на корпусе скоростемера),\n\n3.Проверить контролькой + и – на фишке саут , контакты 1,2 или 3,6 при включенном тумблере режима САУТ\n\n4) Не показывает скорость САУТ: Датчики, БС ДПС или БЭК(на КПД есть скорость)\n\n5) Моргает индикация на пульт ПМ.\n\nВыключи Тягу при 0 КМ, это нормально при включении САУТ.6) ПУ режимы САУТ (зеленый / красный, режим САУТ и ПОДСКАЗКИ) Тумблер в АЛС отключает отключает цепи локомотива от САУТ. Используется для КРАТКОВРЕМЕННОГО отключения САУТ при сбоях и для дальнейшего анализа оных. При этом, САУТ не теряет информацию полученную из базы САУТ.\n\n7) Идет проверка бдительности в режиме САУТ под КЖ, Вылезла ошибка Е1001 \n– замена бс-алс помогло, При проверке блокировка обязательна, так как через минуту идет свисток эпк, не реагируя на рб.\n\n8) Через минуту Пропадает индикация включения режима САУТ на ПМ, на тумблер включения АЛС/САУТ не реагирует.  Помогла замена БЭК\n\n9) При включении САУТ на ПУ, в режим «САУТ» выбивает АЗВ АЛСН.\nВыявлен неисправный БЭК.\n\n10) В пути следования погас пу саут, свист эпк, пропала тяга.\nПомогла замена Бэк", "images": [], "buttons": [{"text": "Неисправности и коды ошибок", "url": "https://telegra.ph/Kody-oshibok-SAUT-07-21"}, {"text": "Работа САУТ", "url": "https://telegra.ph/SAUT-CM485-07-21"}, {"text": "БПрУ", "url": "https://telegra.ph/BPrU-07-21"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_3": {"id": "newNode_3", "title": "КПД — Параметры и настройка", "text": "КПД  Введите номер ошибки (Н600)\n\nПоложение крана на 15 прошивке:\nЧ+МИН в обслуге(27 параметр 1)\n\nПараметры:\n\n00 Давление ТМ\n\n1 Давление ТЦ\n\n02 Диаметр бандажа 1кп ( 600-1350)\n\n03 Диаметр бандажа 2кп ( 600-1350)\n\n04 Наличие МПМЭ (кассеты)\n\n05 ТИП ЛОКОМОТИВА (ВЛ10у-138; ВЛ11-134; ВЛ11м-153; ТЭМ14-627; ТЭМ7а-509; ТЭМ7-547; ЧМЭ3-557; ТЭМ18ДМ-607)\n\n06 Номер локомотива\n\n07    42\n\n08 Верхний предел шкалы скорости\n\n09 Дискретность регистр пути БР-2М/1\n\n10 Дискретность регистр скорости БР2М/1\n\n11 Наличия БР/2М/1  (0 или 1)\n\n12 Верхний предел измерения давления 10\n\n13 Наличие блока контроля:  0 для 3ПА; 1 для 3ПВ\n\n14 Скорость V(Ж)\n\n15 Скорость V(КЖ)\n\n16  (Ноль нельзя)    1\n\n17 Признак одной или двух кабин  1; 2 ; 3-МВПС(2 при 1 КПД на 2 ДКСВМ)\n\n18 Вариант АЛС:  0-АЛС; 1-АЛС+Л143; 2-УКБМ; 5-Л132+Л143; 8-АЛС+ТСКБМ; 16-САУТ; 24-САУТ+ТСКБМ; 32-АЛС4; 64-АЛС+Л116\n\n19 БУС: 0 или 1\n\n20 АГС Путь на один импульс\n\n21 Код варианта КВАРТА\n\n22 Дискретность регистрации топлива\n\n23 День и месяц\n\n24 Год\n\n25 Число доп параметров\n\n26  Чисел в табельном номере  8\n\n27 1", "images": [], "buttons": [{"text": "Коды ошибок КПД", "url": "https://telegra.ph/Oshibki-KPD-07-21"}, {"text": "Настройка КПД 3ПА 3ПВ", "url": "https://telegra.ph/Nastrojka-parametrov-KPD-3PA-i-3PV-07-21"}, {"text": "Настройка КПД 3ПС", "url": "https://telegra.ph/Nastrojka-parametrov-KPD-3PS-07-21"}, {"text": "Серия локомотивов", "url": "https://telegra.ph/Tipy-lokomotivov-07-21"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_4": {"id": "newNode_4", "title": "КЛУБ-У / БЛОК К71", "text": "![к5](к5.jpg)КЛУБ-У БЛОК К71\n\nК5 Ввод постоянных характеристик (с кассетой и БВДУ для КЛУБ)\nК71 диагностика исправностик\nК70 выход из диагностики![к71](к71.png)\n![к71](к71.jpg)К263  Отмена контроля скатывания в течение 120 сек\nК522 версия карты![снс.png](снс.png)", "images": ["к5.jpg", "к71.png", "к71.jpg", "снс.png"], "buttons": [{"text": "Команды БЛОК", "url": "https://telegra.ph/Perchen-komand-BLOK-07-21"}, {"text": "Команды КЛУБ-У", "url": "https://telegra.ph/Komandy-KLUB-U-09-13"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_8": {"id": "newNode_8", "title": "Устройства безопасности", "text": "ОЯ, УКБМ, КОН, АГС...\n\nИдет периодичность в 0, залипли контакты кнопки КП.![Мини-блокнот](Мини-блокнот.jpg) ![Ламели в ОЯ](Ламели в ОЯ.jpg)", "images": ["Мини-блокнот.jpg", "Ламели в ОЯ.jpg"], "buttons": [{"text": "УКБМ", "target": "newNode_9"}, {"text": "РБ-80", "url": "https://telegra.ph/RB-80-07-22"}, {"text": "Приемные катушки", "target": "newNode_17"}, {"text": "ИСАВП-РТ 2ЭС6", "url": "https://telegra.ph/ISAVP-RT-07-22"}, {"text": "ТСКБМ", "target": "newNode_15"}, {"text": "ЭПК 150И", "target": "newNode_16"}, {"text": "РЭ ЭПК 153А", "url": "https://catalog-mtz.ru/api/storage/media/files/7d4d99fb9651ba5121f0d3ae14cdf794.pdf"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_9": {"id": "newNode_9", "title": "УКБМ — Алгоритм работы и разъём", "text": "Алгоритм работы.![укбм разъём](укбм разъём.jpg) Разъем УКБМ![УКБМ листок 1](УКБМ листок 1.png)![УКБМ листок 2](УКБМ листок 2.png)![УКБМ листок 3](УКБМ листок 3.png)![УКБМ листок 4](УКБМ листок 4.png)", "images": ["укбм разъём.jpg", "УКБМ листок 1.png", "УКБМ листок 2.png", "УКБМ листок 3.png", "УКБМ листок 4.png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_10": {"id": "newNode_10", "title": "РСТ — СТОР и настройка радиостанций", "text": "СТОР:\n\n КВ 1 канал УКВ 5 канал.\n на РЛСМ10 ввести 090#; нажать #, затем ВВЕРХ;выставить СТОР ПРМ 1; СТОР ПРД 1;\n ![рлсм](рлсм.png)\n  [![РЛСМ-10 обслуживание](рлсм-10 обложка.PNG)](https://disk.yandex.ru/i/m3P7xeoQQyDXaA)\n Перейти на экран АСУ/ПП1 выставить АСУ 1 нажать F1\nF1 * Тест 1 2 3 голос.\n\nРВС-Вход в меню кнопка сзади, одновременно 4 и 6;\nПароль 3578 или 9102 или 0910;\nСмена прошивки ПУ - кнопка сзади, одновременно 3 и 7;\n ![коды локомотивов рст](коды локомотивов рст.png)![коды локомотивов рст2](коды локомотивов рст2.png)\n\nРВ1.1М-\n\nТест Т-1-ввод; Т-2-Ввод; Т-3-Ввод\nСРС/ПРС: F-ВСП\nПрошивка канала F15-Ввод: F246-Ввод:\nГруппа-Канал (например 1-1): Появится Г1_К1_ К-0052(номер канала)", "images": ["рлсм.png", "коды локомотивов рст.png", "коды локомотивов рст2.png"], "buttons": [{"text": "Видео проверка РЛСМ-10", "url": "https://disk.yandex.ru/i/m3P7xeoQQyDXaA"}, {"text": "КОДЫ ЛОКОМТИВОВ для РСТ", "url": "https://telegra.ph/KODY-LOKOMOTIVOV-DLYA-RST-05-17"}, {"text": "Распайка кабелей РВ1-1М", "target": "newNode_11"}, {"text": "Распайка кабелей РВС-1", "target": "newNode_14"}, {"text": "Распайка кабелей РЛСМ10", "target": "newNode_13"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_11": {"id": "newNode_11", "title": "Распайка кабелей РВ1-1М", "text": "![Распайка кабелей РВ1-1М (1)](Распайка кабелей РВ1-1М (1).png)![Распайка кабелей РВ1-1М (2)](Распайка кабелей РВ1-1М (2).png)![Распайка кабелей РВ1-1М (3)](Распайка кабелей РВ1-1М (3).png)", "images": ["Распайка кабелей РВ1-1М (1).png", "Распайка кабелей РВ1-1М (2).png", "Распайка кабелей РВ1-1М (3).png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_13": {"id": "newNode_13", "title": "Распайка кабелей РЛСМ10", "text": "![Распайка кабелей рлсм10](Распайка кабелей рлсм10.png)", "images": ["Распайка кабелей рлсм10.png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_14": {"id": "newNode_14", "title": "Распайка кабелей РВС-1", "text": "![Распайка кабелей рвс1](Распайка кабелей рвс1.png)", "images": ["Распайка кабелей рвс1.png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_15": {"id": "newNode_15", "title": "ТСКБМ", "text": "![тскбм](тскбм.png)\n\n ТСКБМ-К - версия ПО:\n 4.07 - на маневровых тепловозах с блоком ТСКБМ-А\n 4.01 - везде где нет блока ТСКБМ-А\n\n ![тл-тскбм](тл-тскбм.jpg) \n\n Проверка ТСКБМ тестером ТЛ-ТСКБМ:\n\n*  Включить УБ и ТСКБМ\n*  Вкл тестер. Переключатель в положении В\n*  Проконтролировать загорание желтого индикатора ПРИЕМ на ТСКБМ-П, ТСКБМ-ИМН\n*  Выждать от 70 секунд до 2 минут.\n*  Если индикатор проверки не начнет мигать, а индикатор ПРИЕМ продолжит устойчиво светится -  ТЛ-ТСКБМ выключить.\n* Через 52 сек должен начать мигать желтый Индикатор проверки работоспособности.\n* Если в течении 8 сек не будет нажата РБС, замигает КРАСНЫЙ индикатор и ЭПК будет обесточено.\n*  Нажать РБС для прекращения свистка ЭПК", "images": ["тл-тскбм.jpg", "тскбм.png"], "buttons": [{"text": "Нейроком", "url": "https://www.neurocom.ru/products/ukb/blok/"}, {"text": "/start", "target": "newNode_12"}]}, "newNode_16": {"id": "newNode_16", "title": "ЭПК-150", "text": "![параметры эпк](параметры эпк.png)![пружины](пружины.png)", "images": ["параметры эпк.png", "пружины.png"], "buttons": [{"text": "/start", "target": "newNode_12"}]}, "newNode_17": {"id": "newNode_17", "title": "Приемные катушки", "text": "![парметры ПК](парметры ПК.jpg)![плакат-эдс](плакат-эдс.jpg)![плакат-температура](плакат-температура.jpg)", "images": ["парметры ПК.jpg", "плакат-эдс.jpg", "плакат-температура.jpg"], "buttons": [{"text": "Видео ПРР приемных катушек", "url": "https://youtu.be/91znPRc-e_k?si=GWM9vLTKs5wgqoKV"}, {"text": "Видео Катушки приемные", "url": "https://www.youtube.com/watch?v=XdPHXlwhYAs"}, {"text": "Видео Прием кодов", "url": "https://www.youtube.com/watch?v=Tovmei75WYY"}, {"text": "/start", "target": "newNode_12"}]}};
         let history = [];
         let currentNode = null;
         
@@ -290,7 +262,7 @@
             
             // Изображения (должны обрабатываться первыми)
             html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
-                return `<img src="content/images/${src}" alt="${alt}" loading="lazy" onclick="showImageModal(this.src)">`;
+                return `<img src="content/images/${src}" alt="${alt}" loading="lazy" onclick="showImageModal(this.src)"><div class="image-caption">${alt}</div>`;
             });
             
             // Ссылки
@@ -320,10 +292,12 @@
             
             // Маркированные списки
             html = html.replace(/^[*-] (.+)$/gm, '<li>$1</li>');
-            html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+            // Оборачиваем последовательные li в ul
+            html = html.replace(/(<li>.*<\/li>\n?)+/g, (match) => `<ul>${match}</ul>`);
             
             // Нумерованные списки
             html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+            html = html.replace(/(<li>.*<\/li>\n?)+/g, (match) => `<ol>${match}</ol>`);
             
             // Цитаты
             html = html.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
@@ -334,8 +308,8 @@
             // Переносы строк в параграфы
             const paragraphs = html.split('\n\n');
             html = paragraphs.map(p => {
-                if (p.trim() && !p.startsWith('<') && !p.includes('<h') && !p.includes('<ul') && !p.includes('<blockquote')) {
-                    return `<p>${p}</p>`;
+                if (p.trim() && !p.startsWith('<') && !p.includes('<h') && !p.includes('<ul') && !p.includes('<ol') && !p.includes('<blockquote') && !p.includes('<hr')) {
+                    return `<p>${p.replace(/\n/g, '<br>')}</p>`;
                 }
                 return p;
             }).join('');
@@ -393,13 +367,17 @@
             let html = `<div class="title">${title}</div>`;
             html += `<div class="text">${renderMarkdown(text)}</div>`;
             
-            // Добавляем кнопки из JSON
+            // Добавляем разделитель перед кнопками
+            let hasButtons = false;
+            
+            // Проверяем есть ли кнопки в node
             if (node.buttons && node.buttons.length > 0) {
-                html += '<hr style="margin: 16px 0;">';
+                hasButtons = true;
+                html += '<div class="separator"></div>';
                 node.buttons.forEach(btn => {
                     const btnText = btn.text || '';
                     if (btn.target) {
-                        html += `<button class="button" onclick="goToNode('${btn.target}')">${btnText}</button>`;
+                        html += `<button class="button" onclick="goToNode('${btn.target}')">📂 ${btnText}</button>`;
                     } else if (btn.url) {
                         html += `<button class="button external" onclick="window.open('${btn.url}', '_blank')">🔗 ${btnText}</button>`;
                     }
@@ -407,20 +385,6 @@
             }
             
             document.getElementById('content').innerHTML = html;
-            
-            // Рендерим меню
-            let menuHtml = '<div class="menu-title">📑 Быстрая навигация</div>';
-            if (node.buttons) {
-                node.buttons.forEach(btn => {
-                    if (btn.target) {
-                        menuHtml += `<div class="menu-item" onclick="goToNode('${btn.target}')">${btn.text}</div>`;
-                    } else if (btn.url) {
-                        menuHtml += `<div class="menu-item" style="color:#1f8a70" onclick="window.open('${btn.url}', '_blank')">🔗 ${btn.text}</div>`;
-                    }
-                });
-            }
-            
-            document.getElementById('menu').innerHTML = menuHtml;
             
             // Прокрутка вверх
             window.scrollTo(0, 0);
@@ -444,25 +408,20 @@
         
         // Поиск
         let searchTimeout;
+        let searchResultsShowing = false;
+        
         function search() {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
                 const query = document.getElementById('search').value.toLowerCase().trim();
+                
                 if (!query) {
-                    // Если поиск пустой, показываем обычное меню текущего узла
+                    // Если поиск пустой, показываем последний узел
+                    searchResultsShowing = false;
                     if (currentNode) {
-                        const node = nodes[currentNode];
-                        let menuHtml = '<div class="menu-title">📑 Быстрая навигация</div>';
-                        if (node.buttons) {
-                            node.buttons.forEach(btn => {
-                                if (btn.target) {
-                                    menuHtml += `<div class="menu-item" onclick="goToNode('${btn.target}')">${btn.text}</div>`;
-                                } else if (btn.url) {
-                                    menuHtml += `<div class="menu-item" style="color:#1f8a70" onclick="window.open('${btn.url}', '_blank')">🔗 ${btn.text}</div>`;
-                                }
-                            });
-                        }
-                        document.getElementById('menu').innerHTML = menuHtml;
+                        goToNode(currentNode);
+                    } else {
+                        goHome();
                     }
                     return;
                 }
@@ -477,19 +436,30 @@
                 }
                 
                 if (results.length === 0) {
-                    document.getElementById('menu').innerHTML = '<div class="menu-title">🔍 Ничего не найдено</div>';
+                    document.getElementById('content').innerHTML = `
+                        <div class="title">🔍 Результаты поиска</div>
+                        <div class="text" style="text-align: center; padding: 40px;">
+                            <p>По запросу «<strong>${query}</strong>» ничего не найдено</p>
+                            <p style="color: #666; margin-top: 20px;">Попробуйте изменить поисковый запрос</p>
+                        </div>
+                    `;
+                    searchResultsShowing = true;
                     return;
                 }
                 
-                // Показываем результаты
-                let menuHtml = `<div class="menu-title">🔍 Результаты: ${results.length}</div>`;
-                results.slice(0, 30).forEach(result => {
+                // Показываем результаты поиска в контенте
+                let resultsHtml = `<div class="title">🔍 Результаты поиска: ${results.length}</div>`;
+                resultsHtml += `<div class="text">Найдено страниц: <strong>${results.length}</strong></div>`;
+                resultsHtml += '<div class="separator"></div>';
+                
+                results.slice(0, 50).forEach(result => {
                     let title = result.title;
                     if (title.length > 80) title = title.substring(0, 80) + '...';
-                    menuHtml += `<div class="menu-item" onclick="goToNode('${result.id}')">${title}</div>`;
+                    resultsHtml += `<button class="button" onclick="goToNode('${result.id}')">📄 ${title}</button>`;
                 });
                 
-                document.getElementById('menu').innerHTML = menuHtml;
+                document.getElementById('content').innerHTML = resultsHtml;
+                searchResultsShowing = true;
             }, 300);
         }
         
