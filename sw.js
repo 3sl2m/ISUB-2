@@ -5,7 +5,6 @@ const urlsToCache = [
     'content/images/'
 ];
 
-// Установка Service Worker
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
@@ -16,18 +15,15 @@ self.addEventListener('install', event => {
     );
 });
 
-// Перехват запросов
 self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
             .then(response => {
-                // Возвращаем кэшированный ответ или делаем запрос
                 return response || fetch(event.request);
             })
     );
 });
 
-// Обновление кэша
 self.addEventListener('activate', event => {
     const cacheWhitelist = [CACHE_NAME];
     event.waitUntil(
