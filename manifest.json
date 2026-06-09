@@ -1,8 +1,8 @@
 {
-  "name": "ИСУБ2",
-  "short_name": "ИСУБ2",
+  "name": "ТРПУ Помощник",
+  "short_name": "ТРПУ",
   "description": "Помощник в делах ТРПУ",
-  "start_url": "index.htmlhttps://3sl2m.github.io/ISUB-2/",
+  "start_url": "index.html",
   "display": "standalone",
   "theme_color": "#1a5fb4",
   "background_color": "#ffffff",
@@ -48,15 +48,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "id": "ИСУБ-2",
-  "dir": "auto",
-  "lang": "ru",
-  "categories": [
-    "productivity",
-    "transportation"
-  ],
-  "share_target": {
-    "method": "GET"
-  }
+  ]
 }
