@@ -1,4 +1,5 @@
-const CACHE_NAME = 'trpu-pomoshnik-20260826-1';
+const CACHE_NAME = 'trpu-pomoshnik-20260826100056';
+const OFFLINE_CONTENT_CACHE = 'trpu-offline-content-20260826100056';
 
 // Небольшая оболочка приложения сохраняется сразу. Иконки браузер получает
 // из manifest.json, поэтому они не замедляют первый запуск.
@@ -21,7 +22,7 @@ self.addEventListener('activate', event => {
         caches.keys()
             .then(keys => Promise.all(
                 keys
-                    .filter(key => key !== CACHE_NAME)
+                    .filter(key => key !== CACHE_NAME && key !== OFFLINE_CONTENT_CACHE)
                     .map(key => caches.delete(key))
             ))
             .then(() => self.clients.claim())
@@ -35,20 +36,21 @@ self.addEventListener('fetch', event => {
     if (requestUrl.origin !== self.location.origin) return;
 
     event.respondWith((async () => {
-        const cache = await caches.open(CACHE_NAME);
-        const cached = await cache.match(event.request);
+        const appCache = await caches.open(CACHE_NAME);
+        const offlineCache = await caches.open(OFFLINE_CONTENT_CACHE);
+        const cached = await appCache.match(event.request) || await offlineCache.match(event.request);
         if (cached) return cached;
 
         try {
             const response = await fetch(event.request);
             if (response.ok) {
-                cache.put(event.request, response.clone());
+                offlineCache.put(event.request, response.clone());
             }
             return response;
         } catch (error) {
             // Если связь пропала, приложение всё равно открывается из кэша.
             if (event.request.mode === 'navigate') {
-                return cache.match('./index.html');
+                return appCache.match('./index.html');
             }
             throw error;
         }
