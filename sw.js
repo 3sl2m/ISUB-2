@@ -1,40 +1,56 @@
-const CACHE_NAME = 'trpu-pomoshnik-v1';
-const urlsToCache = [
-    'index.html',
-    'manifest.json',
-    'content/images/'
+const CACHE_NAME = 'trpu-pomoshnik-20260826-1';
+
+// Небольшая оболочка приложения сохраняется сразу. Иконки браузер получает
+// из manifest.json, поэтому они не замедляют первый запуск.
+const APP_SHELL = [
+    './',
+    './index.html',
+    './manifest.json'
 ];
 
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then(cache => {
-                console.log('Cache opened');
-                return cache.addAll(urlsToCache);
-            })
-    );
-});
-
-self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                return response || fetch(event.request);
-            })
+            .then(cache => cache.addAll(APP_SHELL))
+            .then(() => self.skipWaiting())
     );
 });
 
 self.addEventListener('activate', event => {
-    const cacheWhitelist = [CACHE_NAME];
     event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (cacheWhitelist.indexOf(cacheName) === -1) {
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        })
+        caches.keys()
+            .then(keys => Promise.all(
+                keys
+                    .filter(key => key !== CACHE_NAME)
+                    .map(key => caches.delete(key))
+            ))
+            .then(() => self.clients.claim())
     );
+});
+
+self.addEventListener('fetch', event => {
+    if (event.request.method !== 'GET') return;
+
+    const requestUrl = new URL(event.request.url);
+    if (requestUrl.origin !== self.location.origin) return;
+
+    event.respondWith((async () => {
+        const cache = await caches.open(CACHE_NAME);
+        const cached = await cache.match(event.request);
+        if (cached) return cached;
+
+        try {
+            const response = await fetch(event.request);
+            if (response.ok) {
+                cache.put(event.request, response.clone());
+            }
+            return response;
+        } catch (error) {
+            // Если связь пропала, приложение всё равно открывается из кэша.
+            if (event.request.mode === 'navigate') {
+                return cache.match('./index.html');
+            }
+            throw error;
+        }
+    })());
 });
