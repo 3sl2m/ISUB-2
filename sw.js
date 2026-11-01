@@ -1,5 +1,5 @@
-const CACHE_NAME = 'trpu-pomoshnik-20261101170845';
-const OFFLINE_CONTENT_CACHE = 'trpu-offline-content-20261101170845';
+const CACHE_NAME = 'trpu-pomoshnik-20261101171102';
+const OFFLINE_CONTENT_CACHE = 'trpu-offline-content-20261101171102';
 
 // Небольшая оболочка приложения сохраняется сразу. Иконки браузер получает
 // из manifest.json, поэтому они не замедляют первый запуск.
